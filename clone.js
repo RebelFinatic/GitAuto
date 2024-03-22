@@ -39,7 +39,7 @@ async function sendDiscordMessage(title, description) {
 
 
 function pullRepo() {
-    const startMessage = "Pulling down CianticRP-V3 Repo";
+    const startMessage = `Pulling down ${process.env.REPO_NAME}`;
     console.log(chalk.blue(startMessage));
     sendDiscordMessage("Repository Pull Initiated", startMessage);
     
@@ -49,7 +49,7 @@ function pullRepo() {
         sendDiscordMessage("Repository Pull Failed", errorMessage);
         shell.exit(1);
     } else {
-        const successMessage = "Successfully pulled down CianticRP-V3 Repo";
+        const successMessage = `Successfully pulled down ${process.env.REPO_NAME}`;
         console.log(chalk.blue(successMessage));
         sendDiscordMessage("Repository Pull Success", successMessage);
     }
