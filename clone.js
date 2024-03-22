@@ -7,6 +7,8 @@ dotenv.config();
 
 const command = process.argv[2];
 
+const durationCommand = process.argv[3];
+
 const minutes = process.env.DURATION;
 const the_interval = minutes * 60 * 1000;
 
@@ -59,12 +61,24 @@ if (command === 'pull') {
     sendDiscordMessage("Manual git pull initiated...");
     pullRepo();
 } else if (command === 'auto') {
-    console.log(chalk.green("Auto git pull script started...."));
-    sendDiscordMessage("Auto git pull script started....");
-    setInterval(() => {
-        pullRepo();
-    }, the_interval);
+    if (durationCommand) {
+        console.log(chalk.green("Auto git pull script started...."));
+        console.log(chalk.yellow(`Custom pull duration of ${durationCommand} minutes....`));
+        sendDiscordMessage("Auto git pull script started....");
+        setInterval(() => {
+            pullRepo();
+        }, durationCommand * 60 * 1000);
+    } else {
+        console.log(chalk.yellow('DEFAULT DURATION LOADED'));
+        console.log(chalk.green("Auto git pull script started...."));
+        sendDiscordMessage("Auto git pull script started....");
+        setInterval(() => {
+            pullRepo();
+        }, the_interval);
+    }
+
 } else {
     console.log(chalk.yellow("Command not recognized. Use 'pull' for a manual pull or 'auto' for automatic pulling."));
     sendDiscordMessage("Command not recognized. Use 'pull' for a manual pull or 'auto' for automatic pulling.");
 }
+
